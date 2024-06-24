@@ -18,7 +18,7 @@ resource "azurerm_subnet" "subnet" {
 }
 
 resource "azurerm_public_ip" "pip" {
-  for_each = var.vm_map
+  for_each            = var.vm_map
   name                = "${each.value.name}-external"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
@@ -26,8 +26,8 @@ resource "azurerm_public_ip" "pip" {
 }
 
 resource "azurerm_network_interface" "nic" {
-  for_each = var.vm_map
-  name                = "${each.value.name}-nic" 
+  for_each            = var.vm_map
+  name                = "${each.value.name}-nic"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
 
@@ -40,13 +40,13 @@ resource "azurerm_network_interface" "nic" {
 }
 
 resource "azurerm_linux_virtual_machine" "vm" {
-  for_each = var.vm_map
+  for_each              = var.vm_map
   name                  = each.value.name
   resource_group_name   = azurerm_resource_group.rg.name
   location              = azurerm_resource_group.rg.location
   size                  = "Standard_DS1_v2"
   admin_username        = "ansible"
-  admin_password	= "P@ssw0rd1234!"
+  admin_password        = "P@ssw0rd1234!"
   network_interface_ids = [azurerm_network_interface.nic[each.key].id]
 
   admin_ssh_key {
@@ -67,6 +67,6 @@ resource "azurerm_linux_virtual_machine" "vm" {
   }
 
   tags = {
-	role=each.value.tag
+    role = each.value.tag
   }
 }
