@@ -46,7 +46,6 @@ resource "azurerm_linux_virtual_machine" "vm" {
   location              = azurerm_resource_group.rg.location
   size                  = "Standard_DS1_v2"
   admin_username        = "ansible"
-  admin_password        = "P@ssw0rd1234!"
   network_interface_ids = [azurerm_network_interface.nic[each.key].id]
 
   admin_ssh_key {
@@ -69,4 +68,22 @@ resource "azurerm_linux_virtual_machine" "vm" {
   tags = {
     role = each.value.tag
   }
+}
+
+resource "null_resource" "ansible" {
+  provisioner "local-exec" {
+    command = "./inventory-gen.sh"
+  }
+
+  provisioner "local-exec" {
+    command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i inventory -u ansible playbook.yml --vault-pass-file .vault_pass.txt --key-file '~/.ssh/azure'"
+  }
+
+  provisioner "local-exec" {
+    when = destroy
+    command = "rm -rf inventory"
+    on_failure = continue
+  }
+
+  depends_on = [azurerm_linux_virtual_machine.vm]
 }

@@ -1,4 +1,5 @@
 **/.env
+**/.vault_pass.txt
 **/.terraform
 **/.terraform.lock.hcl
 **/terraform.tfstate
@@ -6,3 +7,4 @@
 **/result-tests-local.xml
 **/.vagrant
 **/vendor
+ch3/inventory

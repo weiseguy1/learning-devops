@@ -1,0 +1,9 @@
+---
+- hosts: webservers
+  become: true
+  roles:
+    - nginx
+- hosts: databases
+  become: true
+  roles:
+    - mysql
