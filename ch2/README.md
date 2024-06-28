@@ -1,6 +1,6 @@
 # Chapter 2: Terraform
 
-This chapter talked about how to use Terraform to setup the infrastructure for an Ubuntu VM running on Azure.
+This chapter talked about how to use Terraform to setup the infrastructure for an Ubuntu VM running on Azure. For more in-depth info about this lab, checkout my article [Learning DevOps (Day 01): Terraform](https://weiseguy.net/posts/series/learning-devops/day-01-terraform/)
 
 **NOTE: Make sure you are signed into Azure through the Azure CLI or Azure Powershell. The Terraform code will not work otherwise.** 
 
